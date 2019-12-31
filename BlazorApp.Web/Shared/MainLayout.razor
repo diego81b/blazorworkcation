@@ -1,0 +1,203 @@
+﻿@using BlazorApp.Web.Models
+@inherits LayoutComponentBase
+
+<div id="app" class="min-h-screen bg-gray-200 antialiased xl:flex xl:flex-col xl:h-screen w-full">
+    <SiteHeader></SiteHeader>
+    <div class="xl:flex-1 xl:flex xl:overflow-y-hidden">
+        <SearchFilters></SearchFilters>
+        <main class="py-6 xl:flex-1 xl:overflow-x-hidden">
+            @for (var i = 0; i < Locations.Count; i++)
+            {
+                <div class="@(i > 0 ? "mt-6": "")">
+                    <div class="px-4 xl:px-8">
+                        <h3 class="text-gray-900 text-xl">@Locations[i]?.Title</h3>
+                        <p class="text-gray-600">@Locations[i]?.Description</p>
+                    </div>
+                    <div class="mt-6 sm:overflow-x-auto sm:overflow-y-hidden">
+                        <div class="px-4 sm:inline-flex sm:pt-2 sm:pb-8 xl:px-8">
+                            @for (var k = 0; k < Locations[i].Properties.Count; k++)
+                            {
+                                <div class="@(k > 0 ? "mt-10 sm:ml-4":"")  sm:mt-0 sm:w-80 sm:flex-shrink-0">
+                                    <PropertyCard Property="Locations[i].Properties[k]"></PropertyCard>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </main>
+    </div>
+</div>
+
+@code
+{
+    private bool _sidebarOpen = false;
+
+    private List<Location> Locations = new List<Location>
+{
+        new Location
+        {
+            Title = "Los Angeles",
+            Description = "Live like the stars in these luxurious Southern California estates.",
+            Properties = new List<Property>
+        {
+                new Property
+                {
+                    ImageUrl = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    Beds = 3,
+                    Baths = 2,
+                    Title = "Modern home in city center",
+                    Price = 190000,
+                    ReviewCount = 34,
+                    Rating = 4,
+                },
+                new Property
+                {
+                    ImageUrl = "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    Beds = 4,
+                    Baths = 1,
+                    Title = "Quiet living outside the city",
+                    Price = 175000,
+                    ReviewCount = 12,
+                    Rating = 3,
+                },
+                new Property
+                {
+                    ImageUrl = "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
+                    Beds = 5,
+                    Baths = 4,
+                    Title = "Renovated apartment uptown",
+                    Price = 200000,
+                    ReviewCount = 54,
+                    Rating = 5,
+                }
+            }
+        },
+        new Location
+        {
+            Title = "Phoenix",
+            Description = "Escape the cold and enjoy great weather without breaking the bank.",
+            Properties = new List<Property>
+        {
+                new Property
+                {
+                    ImageUrl = "https://images.unsplash.com/photo-1447958272669-9c562446304f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
+                    Beds = 3,
+                    Baths = 2,
+                    Title = "Modern home in city center",
+                    Price = 190000,
+                    ReviewCount = 34,
+                    Rating = 4,
+                },
+                new Property
+                {
+                    ImageUrl = "https://images.unsplash.com/photo-1475855581690-80accde3ae2b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
+                    Beds = 4,
+                    Baths = 1,
+                    Title = "Quiet living outside the city",
+                    Price = 175000,
+                    ReviewCount = 12,
+                    Rating = 3,
+                },
+            }
+        }
+    };
+
+    private void ToggleSidebar(bool? transition)
+    {
+        _sidebarOpen = transition ?? !_sidebarOpen;
+    }
+}
+
+@*
+    <NavMenu OnClick="ToggleSidebar" SidebarOpen="_sidebarOpen">
+    </NavMenu>
+    <div class="flex-1 min-w-0 flex flex-col bg-white">
+        <div class="flex-shrink-0 sm:border-b-2 sm:border-gray-200">
+            <header>
+                <div class="px-4 sm:px-6">
+                    <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                        <div class="flex-1 min-w-0 flex">
+                            <button @onclick="@(e => ToggleSidebar(true))"
+                                    class="text-gray-600 lg:hidden">
+                                <svg class="h-6 w-6" fill="none" viewbox="0 0 24 24">
+                                    <path d="M4 6h16M4 12h16M4 18h7"
+                                          stroke-linecap="round"
+                                          stroke-width="2"
+                                          stroke="currentColor" />
+                                </svg>
+                            </button>
+                            <div class="flex-shrink-1 ml-3 relative w-64 lg:ml-0">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                                    <svg class="h-6 w-6 text-gray-600"
+                                         fill="none"
+                                         viewbox="0 0 24 24">
+                                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                              stroke-linecap="round"
+                                              stroke-width="2"
+                                              stroke="currentColor" />
+                                    </svg>
+                                </span>
+                                <input class="block w-full rounded-md border border-gray-400 pl-10 pr-4 py-2 text-sm text-gray-900 placeholder-gray-600"
+                                       placeholder="Search" />
+                            </div>
+                        </div>
+                        <div class="ml-6 flex-shrink-0 flex items-center">
+                            <button>
+                                <svg class="h-6 w-6 text-gray-500"
+                                     fill="none"
+                                     viewbox="0 0 24 24">
+                                    <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                                          stroke-linejoin="round"
+                                          stroke-width="2"
+                                          stroke="currentColor" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between py-2">
+                        <div class="flex">
+                            <button class="ml-5 flex items-center pl-2 pr-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-md hover:bg-gray-700">
+                                <svg class="h-6 w-6" fill="none" viewbox="0 0 24 24">
+                                    <path d="M12 7v10m5-5H7"
+                                          stroke-linecap="round"
+                                          stroke-width="2"
+                                          stroke="currentColor" />
+                                </svg>
+                                <span class="ml-1">New Issue</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex px-4 p-1 border-t border-b bg-gray-200 sm:hidden">
+                    <button class="inline-flex items-center justify-center w-1/2 px-2 py-1 rounded">
+                        <svg class="h-6 w-6 text-gray-600"
+                             fill="none"
+                             viewbox="0 0 24 24">
+                            <path d="M4 6h16M4 10h16M4 14h16M4 18h16"
+                                  stroke-linecap="round"
+                                  stroke-width="2"
+                                  stroke="currentColor" />
+                        </svg>
+                        <span class="ml-2 text-sm font-medium text-gray-600 leading-none">List</span>
+                    </button>
+                    <button class="inline-flex items-center justify-center w-1/2 px-2 py-1 bg-white rounded shadow">
+                        <svg class="h-6 w-6 text-gray-600"
+                             fill="none"
+                             viewbox="0 0 24 24">
+                            <path d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"
+                                  stroke-width="2"
+                                  stroke="currentColor" />
+                        </svg>
+                        <span class="ml-2 text-sm font-medium text-gray-900 leading-none">Board</span>
+                    </button>
+                </div>
+            </header>
+        </div>
+        <div class="flex-1 overflow-auto">
+            <main class="p-3 h-full inline-flex overflow-hidden">
+                @Body
+            </main>
+        </div>
+    </div>
+*@

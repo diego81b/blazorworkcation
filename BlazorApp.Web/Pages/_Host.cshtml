@@ -1,0 +1,41 @@
+﻿@page "/"
+@namespace BlazorApp.Web.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>BlazorApp.Web</title>
+    <base href="~/" />
+    <link href="https://rsms.me/inter/inter.css" rel="stylesheet">
+    <link href="dist/blazortest.css" rel="stylesheet" />
+</head>
+<body class="antialiased font-sans bg-gray-200">
+    <app class="h-screen flex">
+        <component type="typeof(App)" render-mode="ServerPrerendered" />
+    </app>
+
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            An error has occurred. This application may no longer respond until reloaded.
+        </environment>
+        <environment include="Development">
+            An unhandled exception has occurred. See browser dev tools for details.
+        </environment>
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script type="text/javascript">
+        if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+            document.write('<script src="js/blazor.polyfill.min.js"><\/script>');
+        }
+    </script>
+    <script src="_framework/blazor.server.js"></script>
+    <script src="dist/blazortest.js"></script>
+</body>
+</html>

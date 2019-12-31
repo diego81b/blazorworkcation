@@ -1,0 +1,37 @@
+﻿@using BlazorApp.Web.Models
+
+    <div class="relative">
+        <button @onclick="Toggle" type="button" class="block focus:outline-none" @onfocus="@(evt => Model.ButtonHasFocus = true)" @onblur="@(evt => Model.ButtonHasFocus = false)">
+            @Trigger(Model)
+        </button>
+        @if (Model.IsOpen)
+        {
+            <div :class="block">
+                <button @onclick="@(e => Model.IsOpen = false)" type="button" class="z-30 block fixed inset-0 w-full h-full cursor-default focus:outline-none"></button>
+                <div class="absolute z-40 right-0">
+                    @ChildContent
+                </div>
+            </div>
+        }
+    </div>
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+
+    private DropdownModel Model { get; set; } = new DropdownModel
+    {
+        IsOpen = false,
+        ButtonHasFocus = false
+    };
+
+    [Parameter]
+    public RenderFragment<DropdownModel> Trigger { get; set; }
+
+    private void Toggle()
+    {
+        Model.IsOpen = !Model.IsOpen;
+    }
+}

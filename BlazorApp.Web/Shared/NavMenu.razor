@@ -1,0 +1,41 @@
+﻿
+@code {
+    [Parameter] public EventCallback<bool?> OnClick { get; set; }
+    [Parameter] public bool SidebarOpen { get; set; }
+}
+
+<div class="sidebar @(SidebarOpen ? "sidebar-open" : "sidebar-close") lg:static lg:inset-auto">
+    <div class="-mx-3 pl-3 pr-1 flex items-center justify-between">
+        <span>
+            <img alt="" class="h-9 w-9" src="favicon.ico" />
+        </span>
+        <button @onclick="@(() => OnClick.InvokeAsync(false))" class="text-gray-700 lg:hidden">
+            <svg class="h-6 w-6" fill="none" viewbox="0 0 24 24">
+                <path d="M6 18L18 6M6 6L18 18"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      stroke="currentColor" />
+            </svg>
+        </button>
+    </div>
+    <nav class="mt-8">
+        <h3 class="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+            Menu
+        </h3>
+        <div class="mt-2 -mx-3">
+            <NavLink class="flex justify-between items-center px-3 py-2 bg-gray-200 rounded-lg" href="" Match="NavLinkMatch.All">
+                <span class="text-sm font-medium text-gray-900">Home</span>
+                <span class="text-xs font-semibold text-gray-700">0</span>
+            </NavLink>
+            <NavLink class="flex justify-between items-center px-3 py-2 bg-gray-200 rounded-lg" href="counter">
+                <span class="text-sm font-medium text-gray-900">Counter</span>
+                <span class="text-xs font-semibold text-gray-700">0</span>
+            </NavLink>
+            <NavLink class="flex justify-between items-center px-3 py-2 bg-gray-200 rounded-lg" href="fetchdata">
+                <span class="text-sm font-medium text-gray-900">Fetch Data</span>
+                <span class="text-xs font-semibold text-gray-700">0</span>
+            </NavLink>
+        </div>
+    </nav>
+</div>

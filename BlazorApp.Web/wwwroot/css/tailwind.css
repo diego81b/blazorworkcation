@@ -1,0 +1,7 @@
+@import "tailwindcss/base";
+@import "./normalize.css";
+@import "./animate.css";
+@import "./site.css";
+@import "./sidebar.css";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
