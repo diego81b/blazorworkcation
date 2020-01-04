@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using BlazorApp.Infrastructure;
 using BlazorApp.Models.Entities;
-using BlazorApp.Web.Areas.Identity;
+using BlazorApp.Web.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -47,7 +47,7 @@ namespace BlazorApp.Web.Services
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
         }
 
         public static void AddJwtAuth(this IServiceCollection services, IConfiguration configuration)

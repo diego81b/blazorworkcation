@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace BlazorApp.Web.Areas.Identity
+namespace BlazorApp.Web.Authorization
 {
     public class RevalidatingIdentityAuthenticationStateProvider<TUser>
         : RevalidatingServerAuthenticationStateProvider where TUser : class
@@ -59,7 +59,8 @@ namespace BlazorApp.Web.Areas.Identity
             {
                 return false;
             }
-            else if (!userManager.SupportsUserSecurityStamp)
+
+            if (!userManager.SupportsUserSecurityStamp)
             {
                 return true;
             }

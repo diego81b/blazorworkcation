@@ -1,0 +1,31 @@
+﻿@if (IsMobile)
+{
+    <AuthorizeView>
+        <Authorized>
+            <a href="#">Hello, @context.User.Identity.Name!</a>
+            <button type="submit" class="block hover:text-white text-gray-800 mt-0 px-4 py-2 hover:bg-indigo-500">Log out</button>
+        </Authorized>
+        <NotAuthorized>
+            <a class="block hover:text-white text-gray-800 mt-0 px-4 py-2 hover:bg-indigo-500" href="#">Register</a>
+            <a class="block hover:text-white text-gray-800 mt-0 px-4 py-2 hover:bg-indigo-500" href="#">Log In</a>
+        </NotAuthorized>
+    </AuthorizeView>
+}
+else
+{
+    <AuthorizeView>
+        <Authorized>
+            <a href="#">Hello, @context.User.Identity.Name!</a>
+            <button type="submit" class="block text-gray-400 hover:text-white">Log out</button>
+        </Authorized>
+        <NotAuthorized>
+            <a class="block text-gray-400 hover:text-white" href="#">Register</a>
+            <a class="mt-3 block text-gray-400 hover:text-white" href="#">Log In</a>
+        </NotAuthorized>
+    </AuthorizeView>
+}
+@code {
+
+    [Parameter]
+    public bool IsMobile { get; set; } = false;
+}
