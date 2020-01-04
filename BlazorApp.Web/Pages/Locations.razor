@@ -1,0 +1,111 @@
+﻿@page "/locations"
+@using BlazorApp.Web.Models
+@using BlazorApp.Web.Shared
+
+<SearchFilters></SearchFilters>
+<div class="px-2 py-2 xl:flex-1 xl:overflow-x-hidden">
+    @if (locations == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        @for (var i = 0; i < locations.Count; i++)
+        {
+            <div class="@(i > 0 ? "mt-6": "")">
+                <div class="px-4 xl:px-8">
+                    <h3 class="text-gray-900 text-xl">@locations[i]?.Title</h3>
+                    <p class="text-gray-600">@locations[i]?.Description</p>
+                </div>
+                <div class="mt-6 sm:overflow-x-auto sm:overflow-y-hidden">
+                    <div class="px-4 sm:inline-flex sm:pt-2 sm:pb-8 xl:px-8">
+                        @for (var k = 0; k < locations[i].Properties.Count; k++)
+                        {
+                            <div class="@(k > 0 ? "mt-10 sm:ml-4":"")  sm:mt-0 sm:w-80 sm:flex-shrink-0">
+                                <PropertyCard Property="locations[i].Properties[k]"></PropertyCard>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    private List<Location> locations;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        locations = new List<Location>
+{
+            new Location
+            {
+                Title = "Los Angeles",
+                Description = "Live like the stars in these luxurious Southern California estates.",
+                Properties = new List<Property>
+{
+                    new Property
+                    {
+                        ImageUrl = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                        Beds = 3,
+                        Baths = 2,
+                        Title = "Modern home in city center",
+                        Price = 190000,
+                        ReviewCount = 34,
+                        Rating = 4,
+                    },
+                    new Property
+                    {
+                        ImageUrl = "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                        Beds = 4,
+                        Baths = 1,
+                        Title = "Quiet living outside the city",
+                        Price = 175000,
+                        ReviewCount = 12,
+                        Rating = 3,
+                    },
+                    new Property
+                    {
+                        ImageUrl = "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
+                        Beds = 5,
+                        Baths = 4,
+                        Title = "Renovated apartment uptown",
+                        Price = 200000,
+                        ReviewCount = 54,
+                        Rating = 5,
+                    }
+                }
+            },
+            new Location
+            {
+                Title = "Phoenix",
+                Description = "Escape the cold and enjoy great weather without breaking the bank.",
+                Properties = new List<Property>
+{
+                    new Property
+                    {
+                        ImageUrl = "https://images.unsplash.com/photo-1447958272669-9c562446304f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
+                        Beds = 3,
+                        Baths = 2,
+                        Title = "Modern home in city center",
+                        Price = 190000,
+                        ReviewCount = 34,
+                        Rating = 4,
+                    },
+                    new Property
+                    {
+                        ImageUrl = "https://images.unsplash.com/photo-1475855581690-80accde3ae2b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
+                        Beds = 4,
+                        Baths = 1,
+                        Title = "Quiet living outside the city",
+                        Price = 175000,
+                        ReviewCount = 12,
+                        Rating = 3,
+                    },
+                }
+            }
+        };
+    }
+}

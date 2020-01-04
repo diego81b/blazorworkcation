@@ -31,9 +31,10 @@
                 </div>
                 <div class="sm:flex sm:items-center">
                     <div class="px-2 pt-2 pb-5 border-b border-gray-800 sm:flex sm:border-b-0 sm:py-0 sm:px-0">
-                        <a href="#" class="block px-3 py-1 rounded font-semibold text-white hover:bg-gray-800 sm:text-sm sm:px-2 xl:text-gray-900 xl:hover:bg-gray-200">List your property</a>
-                        <a href="#" class="mt-1 block px-3 py-1 rounded font-semibold text-white hover:bg-gray-800 sm:mt-0 sm:text-sm sm:px-2 sm:ml-2 xl:text-gray-900 xl:hover:bg-gray-200">Trips</a>
-                        <a href="#" class="mt-1 block px-3 py-1 rounded font-semibold text-white hover:bg-gray-800 sm:mt-0 sm:text-sm sm:px-2 sm:ml-2 xl:text-gray-900 xl:hover:bg-gray-200">Messages</a>
+                        <NavLink class="block px-3 py-1 rounded font-semibold text-white hover:bg-gray-800 sm:text-sm sm:px-2 xl:text-gray-900 xl:hover:bg-gray-200" href="" Match="NavLinkMatch.All">Home</NavLink>
+                        <NavLink class="mt-1 block px-3 py-1 rounded font-semibold text-white hover:bg-gray-800 sm:mt-0 sm:text-sm sm:px-2 sm:ml-2 xl:text-gray-900 xl:hover:bg-gray-200" href="counter">Counter</NavLink>
+                        <NavLink class="mt-1 block px-3 py-1 rounded font-semibold text-white hover:bg-gray-800 sm:mt-0 sm:text-sm sm:px-2 sm:ml-2 xl:text-gray-900 xl:hover:bg-gray-200" href="fetchdata">Fetch Data</NavLink>
+                        <NavLink class="mt-1 block px-3 py-1 rounded font-semibold text-white hover:bg-gray-800 sm:mt-0 sm:text-sm sm:px-2 sm:ml-2 xl:text-gray-900 xl:hover:bg-gray-200" href="locations">Locations</NavLink>
                     </div>
                     <div class="relative px-5 py-5 sm:py-0 sm:ml-4 sm:px-0">
                         <div class="flex items-center sm:hidden">
@@ -41,9 +42,18 @@
                             <span class="ml-4 font-semibold text-gray-200 sm:hidden">Isla Schoger</span>
                         </div>
                         <div class="mt-5 sm:hidden">
-                            <a href="#account" class="block text-gray-400 hover:text-white">Account settings</a>
-                            <a href="#support" class="mt-3 block text-gray-400 hover:text-white">Support</a>
-                            <a href="#sign-out" class="mt-3 block text-gray-400 hover:text-white">Sign out</a>
+                            <AuthorizeView>
+                                <Authorized>
+                                    <a href="Identity/Account/Manage">Hello, @context.User.Identity.Name!</a>
+                                    <form method="post" action="Identity/Account/LogOut">
+                                        <button type="submit" class="block text-gray-400 hover:text-white">Log out</button>
+                                    </form>
+                                </Authorized>
+                                <NotAuthorized>
+                                    <a class="block text-gray-400 hover:text-white" href="Identity/Account/Register">Register</a>
+                                    <a class="mt-3 block text-gray-400 hover:text-white" href="Identity/Account/Login">Log In</a>
+                                </NotAuthorized>
+                            </AuthorizeView>
                         </div>
                         <div class="hidden sm:block">
                             <Dropdown>
@@ -54,9 +64,19 @@
                                 </Trigger>
                                 <ChildContent>
                                     <div class="mt-3 bg-white xl:border rounded-lg w-48 py-2 shadow-xl">
-                                        <a href="#account" class="block hover:text-white text-gray-800 px-4 py-2 hover:bg-indigo-500">Account settings</a>
-                                        <a href="#support" class="block hover:text-white text-gray-800 mt-0 px-4 py-2 hover:bg-indigo-500">Support</a>
-                                        <a href="#sign-out" class="block hover:text-white text-gray-800 mt-0 px-4 py-2 hover:bg-indigo-500">Sign out</a>
+                                        <AuthorizeView>
+                                            <Authorized>
+                                                @*<a href="Identity/Account/Manage">Hello, @context.User.Identity.Name!</a>*@
+                                                <a href="Identity/Account/Manage">Hello, User!</a>
+                                                <form method="post" action="Identity/Account/LogOut">
+                                                    <button type="submit" class="block hover:text-white text-gray-800 mt-0 px-4 py-2 hover:bg-indigo-500">Log out</button>
+                                                </form>
+                                            </Authorized>
+                                            <NotAuthorized>
+                                                <a class="block hover:text-white text-gray-800 mt-0 px-4 py-2 hover:bg-indigo-500" href="Identity/Account/Register">Register</a>
+                                                <a class="block hover:text-white text-gray-800 mt-0 px-4 py-2 hover:bg-indigo-500" href="Identity/Account/Login">Log In</a>
+                                            </NotAuthorized>
+                                        </AuthorizeView>
                                     </div>
                                 </ChildContent>
                             </Dropdown>
