@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BlazorApp.Models.Entities;
+using BlazorApp.Web.Authorization;
 using BlazorApp.Web.Models;
-using BlazorApp.Web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

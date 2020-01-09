@@ -5,7 +5,7 @@ using BlazorApp.Infrastructure;
 using BlazorApp.Models.Entities;
 using BlazorApp.Web.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +22,7 @@ namespace BlazorApp.Web.Services
             //services.AddScoped<IFileManagerService, UploadService>();
             services.AddScoped<AuthenticationService>();
             services.AddScoped(typeof(DbContext), x => x.GetRequiredService(typeof(ApplicationDbContext)));
+            services.AddScoped<ServerAuthenticationStateProvider>();
             services.AddHttpClient();
         }
 
@@ -45,9 +46,10 @@ namespace BlazorApp.Web.Services
                     options.ClaimsIdentity.UserIdClaimType = JwtRegisteredClaimNames.Sub;
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddClaimsPrincipalFactory<AppClaimsPrincipalFactory>()
                 .AddDefaultTokenProviders();
 
-            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
+            services.AddScoped<AppClaimsPrincipalFactory>();
         }
 
         public static void AddJwtAuth(this IServiceCollection services, IConfiguration configuration)
@@ -74,6 +76,11 @@ namespace BlazorApp.Web.Services
                         ClockSkew = TimeSpan.Zero // remove delay of token when expire
                     };
                 });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("IsAdmin", c => c.RequireRole("ADMIN"));
+            });
         }
     }
 }

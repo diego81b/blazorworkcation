@@ -1,9 +1,12 @@
+using System.Linq;
+using System.Net.Mime;
 using BlazorApp.Infrastructure;
 using BlazorApp.Models.Entities;
 using BlazorApp.Web.Services;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +39,14 @@ namespace BlazorApp.Web
             services.AddJwtAuth(Configuration);
 
             services.AddServices(Configuration);
+
+            services.AddResponseCompression(options =>
+            {
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
+                {
+                    MediaTypeNames.Application.Octet
+                });
+            });
 
             //services.AddControllers(mvcOptions => 
             //    mvcOptions.EnableEndpointRouting = false);

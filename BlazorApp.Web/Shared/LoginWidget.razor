@@ -1,13 +1,19 @@
-﻿@if (IsMobile)
+﻿@using BlazorApp.Models.Entities
+@using Microsoft.AspNetCore.Identity
+@inject NavigationManager NavigationManager
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+
+@if (IsMobile)
 {
     <AuthorizeView>
         <Authorized>
             <a href="#">Hello, @context.User.Identity.Name!</a>
-            <button type="submit" class="block hover:text-white text-gray-800 mt-0 px-4 py-2 hover:bg-indigo-500">Log out</button>
+            <button type="submit" class="block hover:text-white text-gray-800 mt-0 px-4 py-2 hover:bg-indigo-500" @onclick="LogoutClick">Log out</button>
         </Authorized>
         <NotAuthorized>
             <a class="block hover:text-white text-gray-800 mt-0 px-4 py-2 hover:bg-indigo-500" href="#">Register</a>
-            <a class="block hover:text-white text-gray-800 mt-0 px-4 py-2 hover:bg-indigo-500" href="#">Log In</a>
+            <NavLink class="block hover:text-white text-gray-800 mt-0 px-4 py-2 hover:bg-indigo-500" href="login">Log In</NavLink>
         </NotAuthorized>
     </AuthorizeView>
 }
@@ -16,7 +22,7 @@ else
     <AuthorizeView>
         <Authorized>
             <a href="#">Hello, @context.User.Identity.Name!</a>
-            <button type="submit" class="block text-gray-400 hover:text-white">Log out</button>
+            <button type="submit" class="block text-gray-400 hover:text-white" @onclick="LogoutClick">Log out</button>
         </Authorized>
         <NotAuthorized>
             <a class="block text-gray-400 hover:text-white" href="#">Register</a>
@@ -28,4 +34,10 @@ else
 
     [Parameter]
     public bool IsMobile { get; set; } = false;
+
+    async Task LogoutClick()
+    {
+        await SignInManager.SignOutAsync();
+        NavigationManager.NavigateTo("/account/login");
+    }
 }
